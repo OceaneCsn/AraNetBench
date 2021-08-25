@@ -1,10 +1,7 @@
-
 # network from current ongoing work on CO2*N
 # load("D:/These/Combi/Results/network_N_CO2.RData")
 # 
 # network_N_CO2$network_data$edges
-# 
-
 
 library(DIANE)
 data("abiotic_stresses")

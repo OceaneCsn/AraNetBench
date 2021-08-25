@@ -45,3 +45,33 @@ knitr::kable(table(validated_edges$type))
 
 
 # Validating a network
+
+
+```{r}
+
+
+evaluate_network <- function(net, validation = c("CHIPSeq", "RNASeq", "Litterature", "TARGET")){
+
+  val <- merge(net, validated_edges, by = c('from', 'to'))
+  val_unique <- aggregate(.~from+to, data = val, FUN = paste0, collapse = '+')
+  
+  # TFs for which we possess validation data
+  studied_tfs <- unique(validated_edges$from)
+  
+  # true positives 
+  tp <- nrow(val_unique)
+  
+  # true positive rate
+  n_studied_interactions <- sum(net$from %in% studied_tfs)
+  tpr <- tp/n_studied_interactions
+  
+  # false positives
+  fp <- sum(net[net$from])
+ 
+}
+
+
+
+
+```
+
