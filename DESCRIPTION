@@ -5,9 +5,15 @@ Authors@R: person('Oceane', 'Cassan',
                   email = 'oceane.cassan@cnrs.fr', 
                   role = c('cre', 'aut'),
                   comment = c(ORCID = "0000-0002-4595-2457"))
-Description: Evaluates an inferred regulatory network against state of the art interaction databases in Arabidopsis thaliana
+Description: 'Evaluates an inferred regulatory network against state of the art interaction databases in Arabidopsis thaliana.'
 License: `use_gpl3_license()`
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+Imports: 
+    stringr
