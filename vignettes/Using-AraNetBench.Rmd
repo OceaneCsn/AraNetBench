@@ -17,3 +17,22 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(AraNetBench)
 ```
+
+# Loading an example network
+
+```{r}
+data("abiotic_stress_Heat_genes_net")
+knitr::kable(head(abiotic_stress_Heat_genes_net))
+```
+
+As it is an output from DIANE, some nodes are made of several genes.
+We are going to "flatten" this dataframe", so that each interaction links only one gene to one gene.
+
+If each node is made of one gene, just skip this step.
+
+```{r}
+net <- flatten_edges(abiotic_stress_Heat_genes_net)
+knitr::kable(head(net))
+```
+
+# Validating a network

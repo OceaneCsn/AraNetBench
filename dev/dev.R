@@ -3,9 +3,11 @@ usethis::use_package("stringr")
 usethis::use_vignette("Using-AraNetBench")
 
 
-
+devtools::document()
 devtools::install()
 
-devtools::document() ; devtools::load_all()
+
+
+#devtools::load_all()
 
 

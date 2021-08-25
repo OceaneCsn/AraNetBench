@@ -17,6 +17,8 @@
 #' @return dataframe of edges with duplicated edges for
 #' grouped regulators
 #'
+#'
+#' @export
 flatten_edges <- function(net) {
   # interactions with no grouped nodes
   distinct <- net[!stringr::str_detect(net$from, 'mean_') &

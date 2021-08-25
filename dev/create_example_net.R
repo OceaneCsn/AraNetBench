@@ -20,8 +20,8 @@ normalized_counts <- tcc_object$counts
 fit <- DIANE::estimateDispersion(tcc = tcc_object)
 
 
-topTags <- DIANE::estimateDEGs(fit, reference = "C", 
-                               perturbation = "H", 
+topTags <- DIANE::estimateDEGs(fit, reference = "M", 
+                               perturbation = "MH", 
                                p.value = 0.05, lfc = 1.5)
 
 genes <- get_locus(topTags$table$genes)
@@ -30,7 +30,8 @@ regressors <- intersect(genes, regulators_per_organism[[
 
 aggregated_data <- aggregate_splice_variants(data = normalized_counts)
 
-grouping <- DIANE::group_regressors(aggregated_data, genes, regressors)
+grouping <- DIANE::group_regressors(aggregated_data, genes, 
+                                    regressors, corr_thr = 0.9)
 
 grouped_counts <- grouping$counts
 grouped_targets <- grouping$grouped_genes
@@ -54,4 +55,4 @@ usethis::use_data(abiotic_stress_Heat_genes_net, version = 3, overwrite = T)
 
 
 # save(net, file = "abiotic_stress_Heat_genes_network.rdata")
-# a <- draw_network(data$nodes, data$edges);a
+a <- draw_network(data$nodes, data$edges);a
