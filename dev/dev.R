@@ -4,9 +4,8 @@ usethis::use_vignette("Using-AraNetBench")
 
 
 
-
-devtools::load_all()
-
-
-
 devtools::install()
+
+devtools::document() ; devtools::load_all()
+
+
