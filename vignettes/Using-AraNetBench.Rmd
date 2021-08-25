@@ -35,4 +35,13 @@ net <- flatten_edges(abiotic_stress_Heat_genes_net)
 knitr::kable(head(net))
 ```
 
+
+# Overview of validation data
+
+```{r}
+data("validated_edges")
+knitr::kable(table(validated_edges$type))
+```
+
+
 # Validating a network
