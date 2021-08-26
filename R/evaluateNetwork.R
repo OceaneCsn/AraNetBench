@@ -59,6 +59,16 @@ evaluate_network <-
     studied_tfs <- unique(validated_edges_specific$from)
     n_studied_interactions <- sum(net$from %in% studied_tfs)
     
+    if(length(studied_tfs) == 0){
+      warning("No regulator present in your network was studied in the database \n")
+      return(list(
+        tp = NA,
+        fp = NA,
+        tpr = NA,
+        fpr = NA
+      ))
+    }
+    
     if(nrow(val) == 0){
       warning("No predicted edge was found in the validation databse... 
               Some coffee to cheer you up? \n")
@@ -80,7 +90,6 @@ evaluate_network <-
     tp <- nrow(val_unique)
     
     # true positive rate
-    
     if(nrow(val) == 0){
       tpr = 0
     }
