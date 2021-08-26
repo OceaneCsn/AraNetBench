@@ -16,7 +16,7 @@
 #' @export
 evaluate_network <-
   function(net,
-           validation = c("CHIPSeq", "DAPSeq", "Litterature", "TARGET"), 
+           validation = c("CHIPSeq", "DAPSeq", "TARGET"), 
            subset_validated_edges = NULL) {
     
     if(!is.null(subset_validated_edges))
@@ -103,11 +103,19 @@ evaluate_network <-
     # false positive rate
     fpr <- fp / n_studied_interactions
     
+    
+    # dataframe of edges with validation information
+    edges <- merge(net, val_unique, 
+                   all = TRUE, by = c('from', 'to'))
+    edges$type <- ifelse(edges$from %in% studied_tfs & 
+                           is.na(edges$type), "Unconfirmed", edges$type)
+    
     results <- list(
       tp = tp,
       fp = fp,
       tpr = tpr,
-      fpr = fpr
+      fpr = fpr,
+      edges = edges
     )
     return(results)
   }

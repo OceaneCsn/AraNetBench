@@ -48,8 +48,7 @@ knitr::kable(table(validated_edges$type))
 
 
 ```{r}
-evaluate_network(net)
-evaluate_network(net, validation = c("CHIPSeq", "TARGET", "DAPSeq"))
-evaluate_network(net, validation = c("Litterature"))
+results <- evaluate_network(net)
+knitr::kable(head(results$edges, n = 20))
 ```
 

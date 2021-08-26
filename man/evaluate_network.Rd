@@ -6,7 +6,7 @@
 \usage{
 evaluate_network(
   net,
-  validation = c("CHIPSeq", "DAPSeq", "Litterature", "TARGET"),
+  validation = c("CHIPSeq", "DAPSeq", "TARGET"),
   subset_validated_edges = NULL
 )
 }
