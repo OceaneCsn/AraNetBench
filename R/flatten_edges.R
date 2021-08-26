@@ -2,9 +2,7 @@
 #'
 #' The line :
 #' from mean_ATGSJHKS-ATGODLKSL to ATGDHJKHK
-#'
 #' becomes :
-#'
 #' from ATGSJHKS to ATGDHJKHK
 #' from ATGODLKSL to ATGDHJKHK
 #'
@@ -17,7 +15,10 @@
 #' @return dataframe of edges with duplicated edges for
 #' grouped regulators
 #'
-#'
+#' @examples
+#' data("abiotic_stress_Heat_genes_net")
+#' flatten_edges(abiotic_stress_Heat_genes_net)
+#' 
 #' @export
 flatten_edges <- function(net) {
   # interactions with no grouped nodes

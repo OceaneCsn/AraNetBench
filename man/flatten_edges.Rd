@@ -20,10 +20,12 @@ grouped regulators
 \description{
 The line :
 from mean_ATGSJHKS-ATGODLKSL to ATGDHJKHK
-}
-\details{
 becomes :
-
 from ATGSJHKS to ATGDHJKHK
 from ATGODLKSL to ATGDHJKHK
+}
+\examples{
+data("abiotic_stress_Heat_genes_net")
+flatten_edges(abiotic_stress_Heat_genes_net)
+
 }

@@ -26,7 +26,7 @@ knitr::kable(head(abiotic_stress_Heat_genes_net))
 ```
 
 As it is an output from DIANE, some nodes are made of several genes.
-We are going to "flatten" this dataframe", so that each interaction links only one gene to one gene.
+We are going to "flatten" this dataframe, so that each interaction links only one gene to one gene.
 
 If each node is made of one gene, just skip this step.
 
@@ -48,30 +48,8 @@ knitr::kable(table(validated_edges$type))
 
 
 ```{r}
-
-
-evaluate_network <- function(net, validation = c("CHIPSeq", "RNASeq", "Litterature", "TARGET")){
-
-  val <- merge(net, validated_edges, by = c('from', 'to'))
-  val_unique <- aggregate(.~from+to, data = val, FUN = paste0, collapse = '+')
-  
-  # TFs for which we possess validation data
-  studied_tfs <- unique(validated_edges$from)
-  
-  # true positives 
-  tp <- nrow(val_unique)
-  
-  # true positive rate
-  n_studied_interactions <- sum(net$from %in% studied_tfs)
-  tpr <- tp/n_studied_interactions
-  
-  # false positives
-  fp <- sum(net[net$from])
- 
-}
-
-
-
-
+evaluate_network(net)
+evaluate_network(net, validation = c("CHIPSeq", "TARGET", "DAPSeq"))
+evaluate_network(net, validation = c("Litterature"))
 ```
 
