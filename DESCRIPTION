@@ -16,6 +16,8 @@ Suggests:
     rmarkdown
 VignetteBuilder: knitr
 Imports: 
+    ggraph,
+    igraph,
     stringr
 Depends: 
     R (>= 2.10)

@@ -22,7 +22,7 @@ library(AraNetBench)
 
 ```{r}
 data("abiotic_stress_Heat_genes_net")
-knitr::kable(head(abiotic_stress_Heat_genes_net))
+head(abiotic_stress_Heat_genes_net)
 ```
 
 As it is an output from DIANE, some nodes are made of several genes.
@@ -32,7 +32,7 @@ If each node is made of one gene, just skip this step.
 
 ```{r}
 net <- flatten_edges(abiotic_stress_Heat_genes_net)
-knitr::kable(head(net))
+head(net)
 ```
 
 
@@ -40,7 +40,7 @@ knitr::kable(head(net))
 
 ```{r}
 data("validated_edges")
-knitr::kable(table(validated_edges$type))
+table(validated_edges$type)
 ```
 
 
@@ -48,8 +48,42 @@ knitr::kable(table(validated_edges$type))
 
 
 ```{r}
+results <- evaluate_network(abiotic_stress_Heat_genes_net)
+results[c("tp", "fp", "tpr", "fpr")]
+head(results$edges, n = 20)
+
+
+
 results <- evaluate_network(net)
 results[c("tp", "fp", "tpr", "fpr")]
-knitr::kable(head(results$edges, n = 20))
+head(results$edges, n = 20)
 ```
+
+
+
+# Drawing hte result of a network evaluation
+
+
+```{r}
+# 
+# 
+# biggest_component_only = FALSE
+# graph <- igraph::graph_from_data_frame(results$edges)
+# if(biggest_component_only){
+#   # removes from the plot the small isolated components of the graph
+#   components <- igraph::clusters(graph, mode="weak")
+#   biggest_cluster_id <- which.max(components$csize)
+#   vert_ids <- V(graph)[components$membership == biggest_cluster_id]
+#   graph <- igraph::induced_subgraph(graph, vert_ids)
+# }
+# 
+# 
+# layout <- ggraph::create_layout(graph, layout = "stress")
+# 
+# 
+# edges <- results$edges
+# grouped_net <- abiotic_stress_Heat_genes_net
+
+```
+
 

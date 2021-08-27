@@ -35,7 +35,15 @@ evaluate_network <-
           "to" %in% colnames(net)))
       stop("The network dataframe should have two columns named 'from' and 'to")
     
+    from_DIANE <- FALSE
     
+    if(any(stringr::str_detect(net$from, 'mean_'))){
+      from_DIANE = TRUE
+      grouped_net <- net
+      # each interaction links only one gene to one gene
+      net <- flatten_edges(net)
+    }
+
     # regex check for Arabidopsis AGIs
     matched <-
       sum(stringr::str_detect(
@@ -49,6 +57,8 @@ evaluate_network <-
     }
     
     # ------------------------------------------------------------------------ #
+    
+    
     
     validated_edges_specific <- 
       validated_edges[validated_edges$type %in% validation, ]
@@ -111,7 +121,38 @@ evaluate_network <-
     edges <- merge(net, val_unique, 
                    all = TRUE, by = c('from', 'to'))
     edges$type <- ifelse(edges$from %in% studied_tfs & 
-                           is.na(edges$type), "Unconfirmed", edges$type)
+                           is.na(edges$type), "Not supported", edges$type)
+    
+    edges$type <- ifelse(is.na(edges$type), "TF not studied", edges$type)
+    
+    # for DIANE's network, regroups the edges as they were before
+    # computing the evaluation metrics
+    if(from_DIANE){
+      grouped_net$type <- "TF not studied"
+      for (i in 1:nrow(edges)) {
+        tf <- edges$from[i]
+        target <- edges$to[i]
+        supporting_value <- edges$type[i]
+        if (supporting_value != "TF not studied") {
+          grouped_link <-
+            grouped_net[stringr::str_detect(grouped_net$from, tf) &
+                          stringr::str_detect(grouped_net$to, target), ]
+          if (grouped_link$type != "TF not studied" &
+              !stringr::str_detect(grouped_link$type[1], supporting_value)) {
+            grouped_link$type <-
+              paste(grouped_net[stringr::str_detect(grouped_net$from, tf) &
+                                  stringr::str_detect(grouped_net$to, target), "type"], 
+                    supporting_value, collapse = '+')
+          }
+          else{
+            grouped_net[stringr::str_detect(grouped_net$from, tf) &
+                          stringr::str_detect(grouped_net$to, target), "type"] <- supporting_value
+          }
+        }
+      }
+      edges <- grouped_net
+    }
+    
     
     results <- list(
       tp = tp,

@@ -24,7 +24,9 @@ of the following values : CHIPSeq, DAPSeq, Litterature, TARGET}
 }
 \value{
 a list containing true positives, true positive rate,
-false positives, false positive rate
+false positives, false positive rate, and the input network dataframe
+with an additional column to caracterise how is the edge supported
+by known interactions
 }
 \description{
 Evaluates an inferred network against validated regulatory interactions
