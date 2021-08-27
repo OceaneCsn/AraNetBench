@@ -2,6 +2,7 @@
 usethis::use_package("stringr")
 usethis::use_package("igraph")
 usethis::use_package("ggraph")
+usethis::use_package("forcats")
 
 
 

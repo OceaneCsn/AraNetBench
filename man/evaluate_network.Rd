@@ -2,7 +2,7 @@
 % Please edit documentation in R/evaluateNetwork.R
 \name{evaluate_network}
 \alias{evaluate_network}
-\title{Evaluate Network}
+\title{Evaluates an inferred network against validated regulatory interactions}
 \usage{
 evaluate_network(
   net,

@@ -25,16 +25,6 @@ data("abiotic_stress_Heat_genes_net")
 head(abiotic_stress_Heat_genes_net)
 ```
 
-As it is an output from DIANE, some nodes are made of several genes.
-We are going to "flatten" this dataframe, so that each interaction links only one gene to one gene.
-
-If each node is made of one gene, just skip this step.
-
-```{r}
-net <- flatten_edges(abiotic_stress_Heat_genes_net)
-head(net)
-```
-
 
 # Overview of validation data
 
@@ -51,39 +41,67 @@ table(validated_edges$type)
 results <- evaluate_network(abiotic_stress_Heat_genes_net)
 results[c("tp", "fp", "tpr", "fpr")]
 head(results$edges, n = 20)
-
-
-
-results <- evaluate_network(net)
-results[c("tp", "fp", "tpr", "fpr")]
-head(results$edges, n = 20)
 ```
 
 
 
-# Drawing hte result of a network evaluation
+# Drawing the result of a network evaluation
 
 
-```{r}
-# 
-# 
-# biggest_component_only = FALSE
-# graph <- igraph::graph_from_data_frame(results$edges)
-# if(biggest_component_only){
-#   # removes from the plot the small isolated components of the graph
-#   components <- igraph::clusters(graph, mode="weak")
-#   biggest_cluster_id <- which.max(components$csize)
-#   vert_ids <- V(graph)[components$membership == biggest_cluster_id]
-#   graph <- igraph::induced_subgraph(graph, vert_ids)
-# }
-# 
-# 
-# layout <- ggraph::create_layout(graph, layout = "stress")
-# 
-# 
-# edges <- results$edges
-# grouped_net <- abiotic_stress_Heat_genes_net
+```{r, fig.width=10, fig.height=7}
+data("regulators")
 
+biggest_component_only = FALSE
+
+edges_colors <- list(
+  "Not supported" = "#393939",
+  "TF not studied" = "black",
+  "CHIPSeq" = "green",
+  "DAPSeq" = "red",
+  "TARGET" = "blue",
+  "CHIPSeq+DAPSeq" = "#aceca1",
+  "DAPSeq+TARGET" = "#0C7C59",
+  "CHIPSeq+DAPSeq+TARGET" = "#FAC05E"
+)
+
+
+results$edges$edges_color <- unlist(edges_colors[results$edges$type])  
+
+graph <- igraph::graph_from_data_frame(results$edges)
+if(biggest_component_only){
+  # removes from the plot the small isolated components of the graph
+  components <- igraph::clusters(graph, mode="weak")
+  biggest_cluster_id <- which.max(components$csize)
+  vert_ids <- V(graph)[components$membership == biggest_cluster_id]
+  graph <- igraph::induced_subgraph(graph, vert_ids)
+}
+
+
+layout <- ggraph::create_layout(graph, layout = "stress")
+layout$gene_type <- ifelse(layout$name %in% regulators, "Regulator", "Target")
+layout$gene_type <- ifelse(stringr::str_detect(layout$name, "mean_"), 
+                           "Grouped regulators", layout$gene_type)
+
+layout$regulator <- relevel(factor(layout$gene_type), ref = "Target")
+layout$gene_type <- forcats::fct_relevel(factor(layout$gene_type), 
+                                c("Regulator", "Grouped regulators", "Target"))
+
+layout$regulator <- ifelse(stringr::str_detect(layout$gene_type, "egul"), 
+                           "Regulator", "Target")
+layout$regulator <- relevel(factor(layout$regulator), ref = "Target")
+
+val <- ggraph::ggraph(layout) + 
+  ggraph::geom_edge_link(
+    ggplot2::aes(alpha = !stringr::str_detect(type, "TF not studied"),
+                color = edges_color),
+    width = 0.51) + 
+  ggraph::geom_node_point(ggplot2::aes(shape = regulator, size = gene_type,
+                      fill = gene_type), stroke = 0.5, 
+                  color = "black", show.legend = F) +
+  ggplot2::scale_shape_manual(values=c(21,22)) + 
+  ggplot2::scale_fill_manual(values = c("#68C872", "darkgreen", "grey"))+
+  ggplot2::scale_size_manual(values = c(2,3,1.5)*1.2) +
+  ggraph::scale_edge_alpha_manual(values = c(0.1,1), guide = F);val
 ```
 
 
