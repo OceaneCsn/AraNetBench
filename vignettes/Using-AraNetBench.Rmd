@@ -112,7 +112,7 @@ val <- ggraph::ggraph(layout) +
   ggraph::scale_edge_color_manual(
     name = "Nature of the \nsupporting knwon\ninteraction",
     values = colors
-  ) + labs(title = "Network with edges colored accordinf to their experimental evidence")+
+  ) + ggplot2::labs(title = "Network with edges colored accordinf to their experimental evidence")+
   ggraph::scale_edge_alpha_manual(values = c(0.51, 1), guide = "none");val
 
 ```
