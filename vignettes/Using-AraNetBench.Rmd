@@ -49,6 +49,7 @@ knitr::kable(table(validated_edges$type))
 
 ```{r}
 results <- evaluate_network(net)
+results[c("tp", "fp", "tpr", "fpr")]
 knitr::kable(head(results$edges, n = 20))
 ```
 
