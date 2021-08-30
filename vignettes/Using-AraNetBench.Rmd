@@ -1,8 +1,7 @@
 ---
 title: "Using-AraNetBench"
 output: 
-  rmarkdown::html_vignette:
-    dev: cairo_pdf
+  rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Using-AraNetBench}
   %\VignetteEngine{knitr::rmarkdown}
@@ -50,74 +49,13 @@ head(results$edges, n = 20)
 # Drawing the result of a network evaluation
 
 
-```{r, fig.width=10, fig.height=8}
-options(device = Cairo::CairoWin)
-data("regulators")
-
-biggest_component_only = TRUE
-
-graph <- igraph::graph_from_data_frame(results$edges)
-if(biggest_component_only){
-  # removes from the plot the small isolated components of the graph
-  components <- igraph::clusters(graph, mode="weak")
-  biggest_cluster_id <- which.max(components$csize)
-  vert_ids <- igraph::V(graph)[components$membership == biggest_cluster_id]
-  graph <- igraph::induced_subgraph(graph, vert_ids)
-}
-
-
-layout <- ggraph::create_layout(graph, layout = "stress")
-layout$gene_type <- ifelse(layout$name %in% regulators, "Regulator", "Target")
-layout$gene_type <- ifelse(stringr::str_detect(layout$name, "mean_"), 
-                           "Grouped regulators", layout$gene_type)
-
-layout$regulator <- relevel(factor(layout$gene_type), ref = "Target")
-layout$gene_type <- forcats::fct_relevel(factor(layout$gene_type), 
-                                c("Regulator", "Grouped regulators", "Target"))
-
-
-layout$regulator <-
-  ifelse(stringr::str_detect(layout$gene_type, "egulator"),
-         "Regulator",
-         "Target")
-layout$regulator <-
-  relevel(factor(layout$regulator), ref = "Target")
-
-colors <- c(
-      "Not supported" = "#393939",
-      "TF not studied" = "grey",
-      "CHIPSeq" = "#0C7C59",
-      "DAPSeq" = "#aceca1",
-      "TARGET" = "#FAC05E",
-      "CHIPSeq+DAPSeq" = "red",
-      "DAPSeq+TARGET" = "blue",
-      "CHIPSeq+DAPSeq+TARGET" = "green"
-    )
-  
-val <- ggraph::ggraph(layout) +
-  ggraph::geom_edge_link(
-    ggplot2::aes(
-      alpha = !stringr::str_detect(type, "TF not studied"),
-      col = type
-    ),
-    width = 0.71,
-    show.legend = TRUE
-  ) +
-  ggraph::geom_node_point(
-    ggplot2::aes(shape = regulator, size = gene_type,
-                 fill = gene_type),
-    stroke = 0.235,
-    color = "black", show.legend = F,
-  ) +
-  ggplot2::scale_shape_manual(values = c(21, 22), guide = "none") + 
-  ggplot2::scale_fill_manual(values = c("#68C872", "darkgreen", "grey"), guide = "none") +
-  ggplot2::scale_size_manual(values = c(2, 3, 1.5) * 0.95, guide = "none") +
-  ggraph::scale_edge_color_manual(
-    name = "Nature of the \nsupporting knwon\ninteraction",
-    values = colors
-  ) + ggplot2::labs(title = "Network edges colored according to their experimental evidence")+
-  ggraph::scale_edge_alpha_manual(values = c(0.51, 1), guide = "none");val
-
+```{r, fig.width=10, fig.height=10}
+draw_evaluated_network(results)
 ```
+To save the output
+```{r, eval=FALSE}
+draw_evaluated_network(results, export = TRUE)
+```
+
 
 
