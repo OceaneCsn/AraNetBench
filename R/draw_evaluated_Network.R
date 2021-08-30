@@ -50,7 +50,8 @@ draw_evaluated_network <- function(results, export = FALSE, filename = './evalua
     "DAPSeq" = "#aceca1",
     "TARGET" = "#FAC05E",
     "CHIPSeq+DAPSeq" = "red",
-    "DAPSeq+TARGET" = "blue",
+    "DAPSeq+TARGET" = "#749bcd",
+    "TARGET+DAPSeq" = "#749bcd",
     "CHIPSeq+DAPSeq+TARGET" = "green"
   )
   
