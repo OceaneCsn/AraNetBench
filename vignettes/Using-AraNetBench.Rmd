@@ -23,7 +23,7 @@ library(AraNetBench)
 
 ```{r}
 data("abiotic_stress_Heat_genes_net")
-head(abiotic_stress_Heat_genes_net)
+knitr::kable(head(abiotic_stress_Heat_genes_net))
 ```
 
 
@@ -31,7 +31,7 @@ head(abiotic_stress_Heat_genes_net)
 
 ```{r}
 data("validated_edges")
-table(validated_edges$type)
+knitr::kable(table(validated_edges$type))
 ```
 
 
@@ -41,7 +41,7 @@ table(validated_edges$type)
 ```{r}
 results <- evaluate_network(abiotic_stress_Heat_genes_net)
 results[c("tp", "fp", "tpr", "fpr")]
-head(results$edges, n = 20)
+knitr::kable(head(results$edges, n = 20))
 ```
 
 
@@ -52,7 +52,8 @@ head(results$edges, n = 20)
 ```{r, fig.width=10, fig.height=10}
 draw_evaluated_network(results)
 ```
-To save the output
+To save the output in a files :
+
 ```{r, eval=FALSE}
 draw_evaluated_network(results, export = TRUE)
 ```
@@ -60,11 +61,17 @@ draw_evaluated_network(results, export = TRUE)
 
 # Test if the network contains biological signal or if the rate of validated edges does not differ from random
 
+DAPSeq, CHIPSeq and TARGET information seems to be captured by the network inference : 
 
 ```{r, fig.width=8, fig.height=6}
 test_validation_rate(abiotic_stress_Heat_genes_net, N = 100)
+```
+Whereas CHIPSeq signal alone in the network could have been achieved by randomly TFs to targets...
+
+```{r, fig.width=8, fig.height=6}
 test_validation_rate(abiotic_stress_Heat_genes_net, validation = c("CHIPSeq"), N = 100)
 ```
+
 
 
 
