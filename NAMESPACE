@@ -3,3 +3,4 @@
 export(draw_evaluated_network)
 export(evaluate_network)
 export(flatten_edges)
+export(test_validation_rate)

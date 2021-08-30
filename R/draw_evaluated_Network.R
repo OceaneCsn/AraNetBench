@@ -27,8 +27,13 @@ draw_evaluated_network <- function(results, export = FALSE, filename = './evalua
                              "Grouped regulators", layout$gene_type)
   
   layout$regulator <- relevel(factor(layout$gene_type), ref = "Target")
-  layout$gene_type <- forcats::fct_relevel(factor(layout$gene_type), 
+  
+  if("Grouped regulators" %in% layout$gene_type)
+    layout$gene_type <- forcats::fct_relevel(factor(layout$gene_type), 
                                            c("Regulator", "Grouped regulators", "Target"))
+  else
+    layout$gene_type <- forcats::fct_relevel(factor(layout$gene_type), 
+                                             c("Regulator", "Target"))
   
   
   layout$regulator <-
@@ -64,8 +69,7 @@ draw_evaluated_network <- function(results, export = FALSE, filename = './evalua
       stroke = 0.235,
       color = "black", show.legend = F,
     ) + ggraph::theme_graph()+
-    ggplot2::scale_shape_manual(values = c(21, 22), guide = "none") + 
-    ggplot2::scale_fill_manual(values = c("#68C872", "darkgreen", "grey"), guide = "none") +
+    ggplot2::scale_shape_manual(values = c(21, 22), guide = "none") +
     ggplot2::scale_size_manual(values = c(2, 3, 1.5) * 0.95, guide = "none") +
     ggraph::scale_edge_color_manual(
       name = "Nature of the \nsupporting knwon\ninteraction",
@@ -73,6 +77,11 @@ draw_evaluated_network <- function(results, export = FALSE, filename = './evalua
     ) + ggplot2::labs(title = "Network edges colored according to their experimental evidence",
                       subtitle = paste(round(results$tpr*100, 2), "% of the edges (with validation information available) are supported"))+
     ggraph::scale_edge_alpha_manual(values = c(0.51, 1), guide = "none")
+  
+  if("Grouped regulators" %in% layout$gene_type)
+    val <- val + ggplot2::scale_fill_manual(values = c("#68C872", "darkgreen", "grey"), guide = "none")
+  else 
+    val <- val + ggplot2::scale_fill_manual(values = c("#68C872", "grey"), guide = "none")
   if(export)
     ggpubr::ggexport(val, filename = filename, res = 400, height = 3000, width = 3000)
   return(val)

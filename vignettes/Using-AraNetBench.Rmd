@@ -58,4 +58,13 @@ draw_evaluated_network(results, export = TRUE)
 ```
 
 
+# Test if the network contains biological signal or if the rate of validated edges does not differ from random
+
+
+```{r, fig.width=8, fig.height=6}
+test_validation_rate(abiotic_stress_Heat_genes_net, N = 100)
+test_validation_rate(abiotic_stress_Heat_genes_net, validation = c("CHIPSeq"), N = 100)
+```
+
+
 

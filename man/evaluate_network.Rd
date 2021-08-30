@@ -20,7 +20,9 @@ evaluation process.
 The validation type must be a vector of one or more
 of the following values : CHIPSeq, DAPSeq, Litterature, TARGET}
 
-\item{subset_validated_edges}{}
+\item{subset_validated_edges}{potential dataframe of validated edges
+(that should however contain all the nodes in the inferred network).
+Made to speed up computation in ROC and test again random.}
 }
 \value{
 a list containing true positives, true positive rate,
