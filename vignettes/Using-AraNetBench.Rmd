@@ -1,6 +1,8 @@
 ---
 title: "Using-AraNetBench"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    dev: cairo_pdf
 vignette: >
   %\VignetteIndexEntry{Using-AraNetBench}
   %\VignetteEngine{knitr::rmarkdown}
@@ -49,6 +51,7 @@ head(results$edges, n = 20)
 
 
 ```{r, fig.width=10, fig.height=8}
+options(device = Cairo::CairoWin)
 data("regulators")
 
 biggest_component_only = TRUE
@@ -106,13 +109,13 @@ val <- ggraph::ggraph(layout) +
     stroke = 0.235,
     color = "black", show.legend = F,
   ) +
-  ggplot2::scale_shape_manual(values = c(21, 22), guide = "none") + ggraph::theme_graph() +
+  ggplot2::scale_shape_manual(values = c(21, 22), guide = "none") + 
   ggplot2::scale_fill_manual(values = c("#68C872", "darkgreen", "grey"), guide = "none") +
   ggplot2::scale_size_manual(values = c(2, 3, 1.5) * 0.95, guide = "none") +
   ggraph::scale_edge_color_manual(
     name = "Nature of the \nsupporting knwon\ninteraction",
     values = colors
-  ) + ggplot2::labs(title = "Network with edges colored accordinf to their experimental evidence")+
+  ) + ggplot2::labs(title = "Network edges colored according to their experimental evidence")+
   ggraph::scale_edge_alpha_manual(values = c(0.51, 1), guide = "none");val
 
 ```
