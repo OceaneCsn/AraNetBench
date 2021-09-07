@@ -7,7 +7,8 @@ load("~/Documents/Combi/Results/network_N_CO2.RData")
 load("D:/These/Combi/Results/network_N_CO2.RData")
 net <- network_N_CO2$network_data$edges
 
-res <- evaluate_network(net)
+res <- evaluate_network(net, 
+                        validation = c("Litterature"))
 
 
 

@@ -85,14 +85,16 @@ evaluate_network <-
     
     if (nrow(val) == 0) {
       warning(
-        "No predicted edge was found in the validation databse...
-              Some coffee to cheer you up? \n"
+        "No predicted edge was found in the validation databse...Coffee to cheer you up? \n"
       )
+      edges <- net
+      edges$type = "Not supported"
       return(list(
         tp = 0,
         fp = n_studied_interactions,
         tpr = 0,
-        fpr = 1
+        fpr = 1,
+        edges = edges
       ))
     }
     
