@@ -47,7 +47,8 @@ evaluate_network <-
     
     # regex check for Arabidopsis AGIs
     matched <-
-      sum(stringr::str_detect(c(net$from, net$to), pattern = "^AT[[:alnum:]]G[[:digit:]]{5}"))
+      sum(stringr::str_detect(c(net$from, net$to), 
+                              pattern = "^AT[[:alnum:]]G[[:digit:]]{5}"))
     
     if (matched != 2 * nrow(net)) {
       if (matched > 0)
@@ -160,6 +161,12 @@ evaluate_network <-
     }
     
     # sorting type of edge
+    reorder_type <- function(type){
+      types <- unlist(strsplit(type, '\\+'))
+      return(paste(types[order(types)], collapse = '+'))
+    }
+    
+    edges$type <- sapply(edges$type, reorder_type)
     edges <- edges[order(edges$type),] 
     
     results <- list(

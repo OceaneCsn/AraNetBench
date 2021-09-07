@@ -47,7 +47,7 @@ test_validation_rate <- function(net,
                         colour="#0C7C59", angle=-90,size = 4, nudge_x = -0.0055, label.size = 0)+
     ggplot2::geom_jitter(ggplot2::aes(x =Null.distribution, y = 0),  
                          color = 'black', size = 3, alpha = 0.2) +
-    ggplot2::labs(title = paste("Right-sided permutation test of the inferred network against random : P =", pval),
+    ggplot2::labs(title = paste("Testing the inferred network's validation rate against random : P =", pval),
                   subtitle = paste("Null distribution of validated edges rates computed on", 
                                    N, "shuffled networks")) + ggpubr::theme_pubr() +
     ggplot2::xlab("") + ggplot2::ylab(""))
