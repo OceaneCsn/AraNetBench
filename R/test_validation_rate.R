@@ -39,7 +39,7 @@ test_validation_rate <- function(net,
   }
   pval <- sum(tprs > observed$tpr)/N
   distr <- data.frame("Null distribution" = tprs)
-  print(ggplot2::ggplot(distr, ggplot2::aes(Null.distribution)) + 
+  plot <- ggplot2::ggplot(distr, ggplot2::aes(Null.distribution)) + 
     ggplot2::geom_density(fill = "#aceca1", alpha = 0.4) +
     ggplot2::geom_vline(xintercept = observed$tpr, size = 2, color = "#0C7C59", 
                         show.legend = TRUE)  +
@@ -50,7 +50,7 @@ test_validation_rate <- function(net,
     ggplot2::labs(title = paste("Testing the inferred network's validation rate against random : P =", pval),
                   subtitle = paste("Null distribution of validated edges rates computed on", 
                                    N, "shuffled networks")) + ggpubr::theme_pubr() +
-    ggplot2::xlab("") + ggplot2::ylab(""))
-  return(pval)
+    ggplot2::xlab("") + ggplot2::ylab("")
+  return(plot)
   
 }

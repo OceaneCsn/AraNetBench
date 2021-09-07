@@ -5,7 +5,7 @@ usethis::use_package("ggraph")
 usethis::use_package("forcats")
 usethis::use_package("ggplot2")
 usethis::use_package("Cairo")
-
+usethis::use_package("ggpubr")
 
 usethis::use_vignette("Using-AraNetBench")
 
@@ -13,6 +13,7 @@ usethis::use_vignette("Using-AraNetBench")
 devtools::document()
 devtools::install()
 
+devtools::build_vignettes()
 
 
 #devtools::load_all()
