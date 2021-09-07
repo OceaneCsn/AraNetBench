@@ -69,9 +69,10 @@ This can by altered with the `validation` argument, containing the desired natur
 
 Call `evaluate_network` to compute evaluation metrics on an inferred network such as true positives and true positive rate (interactions that are supported by experimental evidence), or false positives and false positive rate. It will also return the same network as the input, but with an additional column about the supporting information on each edge.
 
-
+For reproducible results, set the seed before random networks perumtations :
 
 ```{r}
+set.seed(999)
 results <- evaluate_network(abiotic_stress_Heat_genes_net)
 results[c("tp", "fp", "tpr", "fpr")]
 knitr::kable(head(results$edges, n = 20))
