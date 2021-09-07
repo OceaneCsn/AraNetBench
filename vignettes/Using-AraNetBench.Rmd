@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 # Principle 
 
-> AraNetBench is a package designed to evaluate the result of a network inference method against on known, experimentally determined, regulatory interactions.
+> AraNetBench is a package designed to evaluate the result of a network inference method against on known, experimentally determined, regulatory interactions in *Arabidopsis thaliana*.
 
 In systems biology, reconstructing gene regulatory networks is at the same time an ultimate goal, as well as a real challenge. Usually, network inference methods predict connections between genes using expression values in a set of experimental conditions and genes of interest. Those predicted connections are supposed to carry information about the transcriptional dependencies at stake in the response to a developmental of adaptive mechanism. 
 
@@ -85,7 +85,7 @@ knitr::kable(head(results$edges, n = 20))
 To display a view of the network, with its edges colored depending on their validation status, and the nature of the supporting information in connecTF, call `draw_evaluated_network` on the result of `evaluate_network` :
 
 
-```{r, fig.width=10, fig.height=10, warning=FALSE}
+```{r, fig.width=8, fig.height=8, warning=FALSE}
 draw_evaluated_network(results)
 ```
 
