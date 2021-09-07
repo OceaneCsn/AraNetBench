@@ -1,8 +1,8 @@
-
+library(AraNetBench)
 
 # network from current ongoing work on CO2*N
 load("~/Documents/Combi/Results/network_N_CO2.RData")
-
+load("D:/These/Combi/Results/network_N_CO2.RData")
 net <- network_N_CO2$network_data$edges
 
 res <- evaluate_network(net)

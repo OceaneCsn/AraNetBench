@@ -15,27 +15,60 @@ knitr::opts_chunk$set(
 )
 ```
 
+
+
+# Principle 
+
+> AraNetBench is a package designed to evaluate the result of a network inference method against on known, experimentally determined, regulatory interactions.
+
+In systems biology, reconstructing gene regulatory networks is at the same time an ultimate goal, as well as a real challenge. Usually, network inference methods predict connections between genes using expression values in a set of experimental conditions and genes of interest. Those predicted connections are supposed to carry information about the transcriptional dependencies at stake in the response to a developmental of adaptive mechanism. 
+
+However, biological systems and the true regulatory networks orchestrating gene expression changes in cells are still far from being fully mapped. This makes it very difficult to asses weather network inference methods correctly predict those regulatory relationships between genes.
+
+AraNetBench was made in an effort quantitatively validate inferred networks in *Arabidopsis thaliana* against the [connecTF database](https://connectf.org/). Although the connecTF plateform is a great online graphical tool, is does not allow to streamline and generalize the validation processes like scripts or automated pipelines would offer.
+
+This package thus contains several functions that can be called from R scripts given any inferred network in the form of an edges dataframe. Those functions :
+
++ Compute **evaluation metrics** on an inferred network such as true positives and true positive rate (interactions that are supported by experimental evidence), or false positives and false positive rate.
+
++ **Display a view of the network**, with its edges colored depending on their validation status, and the nature of the supporting information in connecTF.
+
++ Asses if the inference allowed a **significant improvement in biological meaning over randomness**.
+
 ```{r setup}
 library(AraNetBench)
 ```
 
 # Loading an example network
 
+AraNetBench comes with its companion dataset, i.e an infered network of genes responsive to heat under manitol stress. The data was collected by [Sewelam et Al. Molecular plant responses to combined abiotic stresses put a spotlight on unknown and abundant genes. J Exp Bot. 2020.](https://pubmed.ncbi.nlm.nih.gov/32442250/), and a network on those genes was inferred in [the article](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-021-07659-2) presenting [DIANE](https://oceanecsn.github.io/DIANE/).
+
+Here is an overview of this infered network :
+
+
 ```{r}
 data("abiotic_stress_Heat_genes_net")
 knitr::kable(head(abiotic_stress_Heat_genes_net))
 ```
 
+All input networks should be formatted identically (i.e a column `from`, and a column `to`, both containing gene AGI). If the inferred network comes from DIANE (not a prerequiste), grouped regulators will be temporarily ungrouped to compute evaluation metrics, then regrouped for visualisation.
 
 # Overview of validation data
+
+The validation database contains different experiment types to confirm predicted interactions :
 
 ```{r}
 data("validated_edges")
 knitr::kable(table(validated_edges$type))
 ```
 
+By default, DAPSeq, CHIPSeq and TARGET data are used.
+This can by altered with the `validation` argument, containing the desired nature of the validation links.
 
 # Validating a network
+
+Call `evaluate_network` to compute evaluation metrics on an inferred network such as true positives and true positive rate (interactions that are supported by experimental evidence), or false positives and false positive rate. It will also return the same network as the input, but with an additional column about the supporting information on each edge.
+
 
 
 ```{r}
@@ -49,29 +82,35 @@ knitr::kable(head(results$edges, n = 20))
 # Drawing the result of a network evaluation
 
 
-```{r, fig.width=10, fig.height=10}
+To display a view of the network, with its edges colored depending on their validation status, and the nature of the supporting information in connecTF, call `draw_evaluated_network` on the result of `evaluate_network` :
+
+
+```{r, fig.width=10, fig.height=10, warning=FALSE}
 draw_evaluated_network(results)
 ```
-To save the output in a files :
 
-```{r, eval=FALSE}
-draw_evaluated_network(results, export = TRUE)
+To save the output in a file :
+
+```{r, eval=FALSE, warning=FALSE}
+draw_evaluated_network(results, export = TRUE, filename = "evaluated_network.png")
 ```
 
 
-# Test if the network contains biological signal or if the rate of validated edges does not differ from random
+# Permutation test on an inferred network 
 
-DAPSeq, CHIPSeq and TARGET information seems to be captured by the network inference : 
+To test if the network contains biological signal or if the rate of validated edges does not differ from what is expected under random inference, run `test_validation_rate` on the inferred network.
+
+For example, DAPSeq, CHIPSeq and TARGET information clearly seem to be captured by the network inference in the demo dataset: 
 
 ```{r, fig.width=8, fig.height=6}
 test_validation_rate(abiotic_stress_Heat_genes_net, N = 100)
 ```
-Whereas CHIPSeq signal alone in the network could have been achieved by randomly TFs to targets...
+
+Whereas CHIPSeq signal alone in the network could have been achieved by randomly linking TFs to targets...
 
 ```{r, fig.width=8, fig.height=6}
 test_validation_rate(abiotic_stress_Heat_genes_net, validation = c("CHIPSeq"), N = 100)
 ```
 
 
-
-
+Other functions to come soon, like drawing ROC curves on fully connected weighted inferred networks! 
