@@ -8,11 +8,17 @@ load("D:/These/Combi/Results/network_N_CO2.RData")
 net <- network_N_CO2$network_data$edges
 
 res <- evaluate_network(net, 
-                        validation = c("Litterature"))
+                        validation = c("TARGET"))
 
+
+res <- evaluate_network(net, 
+                        validation = c("CHIPSeq"))
+
+res <- evaluate_network(net, 
+                        validation = c("DAPSeq"))
 
 
 draw_evaluated_network(res)
 
 
-test_validation_rate(net)
+test_validation_rate(net, validation = c("TARGET"))
