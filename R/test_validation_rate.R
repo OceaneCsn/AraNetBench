@@ -71,7 +71,7 @@ test_validation_rate <- function(net,
     ) +
     ggplot2::labs(
       title = paste(
-        "Testing the inferred network's validation rate : P =",
+        "Testing the inferred network's validation rate : P value =",
         round(pval, 5),
         " Z-score = ",
         round(zscore, 3)
