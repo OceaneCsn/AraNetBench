@@ -1,6 +1,6 @@
 # AraNetBench
 
-> AraNetBench is a package designed to evaluate the result of a network inference method against on known, experimentally determined, regulatory interactions in *Arabidopsis thaliana*.
+> AraNetBench is a package designed to evaluate the result of a network inference method against known, experimentally determined, regulatory interactions in *Arabidopsis thaliana*.
 
 <img src="Network.png" align="right" width="480"/>
 
