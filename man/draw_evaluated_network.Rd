@@ -23,3 +23,9 @@ ggplot/ggraph object
 \description{
 Draw the result of a network evaluation
 }
+\examples{
+data("abiotic_stress_Heat_genes_net")
+set.seed(999)
+results <- evaluate_network(abiotic_stress_Heat_genes_net)
+draw_evaluated_network(results)
+}

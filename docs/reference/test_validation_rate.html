@@ -101,7 +101,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/OceaneCsn/AraNetBench/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -116,7 +121,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Test a network against random</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/OceaneCsn/AraNetBench/blob/master/R/test_validation_rate.R'><code>R/test_validation_rate.R</code></a></small>
     <div class="hidden name"><code>test_validation_rate.Rd</code></div>
     </div>
 
@@ -155,8 +160,15 @@ of the validation rate. 200 by default.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>the empirical p-pvalue of the permutation-based test</p>
+    <p>A plot containing the empirical p-pvalue
+of the permutation-based test</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"abiotic_stress_Heat_genes_net"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>999</span><span class='op'>)</span>
+<span class='va'>results</span> <span class='op'>&lt;-</span> <span class='fu'><a href='evaluate_network.html'>evaluate_network</a></span><span class='op'>(</span><span class='va'>abiotic_stress_Heat_genes_net</span><span class='op'>)</span>
+<span class='fu'>test_validation_rate</span><span class='op'>(</span><span class='va'>abiotic_stress_Heat_genes_net</span>, N <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
+</div><div class='img'><img src='test_validation_rate-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

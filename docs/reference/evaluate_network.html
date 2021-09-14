@@ -101,7 +101,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/OceaneCsn/AraNetBench/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -116,7 +121,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Evaluates an inferred network against validated regulatory interactions</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/OceaneCsn/AraNetBench/blob/master/R/evaluateNetwork.R'><code>R/evaluateNetwork.R</code></a></small>
     <div class="hidden name"><code>evaluate_network.Rd</code></div>
     </div>
 
@@ -161,6 +166,23 @@ false positives, false positive rate, and the input network dataframe
 with an additional column to caracterise how is the edge supported
 by known interactions</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'>#' data("abiotic_stress_Heat_genes_net")</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>999</span><span class='op'>)</span>
+<span class='va'>results</span> <span class='op'>&lt;-</span> <span class='fu'>evaluate_network</span><span class='op'>(</span><span class='va'>abiotic_stress_Heat_genes_net</span><span class='op'>)</span>
+<span class='va'>results</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"tp"</span>, <span class='st'>"fp"</span>, <span class='st'>"tpr"</span>, <span class='st'>"fpr"</span><span class='op'>)</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; $tp
+#&gt; [1] 266
+#&gt; 
+#&gt; $fp
+#&gt; [1] 708
+#&gt; 
+#&gt; $tpr
+#&gt; [1] 0.2731006
+#&gt; 
+#&gt; $fpr
+#&gt; [1] 0.7268994
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

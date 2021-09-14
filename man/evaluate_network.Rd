@@ -33,3 +33,9 @@ by known interactions
 \description{
 Evaluates an inferred network against validated regulatory interactions
 }
+\examples{
+#' data("abiotic_stress_Heat_genes_net")
+set.seed(999)
+results <- evaluate_network(abiotic_stress_Heat_genes_net)
+results[c("tp", "fp", "tpr", "fpr")]
+}

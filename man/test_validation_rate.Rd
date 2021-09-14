@@ -24,8 +24,15 @@ of the following values : CHIPSeq, DAPSeq, Litterature, TARGET}
 of the validation rate. 200 by default.}
 }
 \value{
-the empirical p-pvalue of the permutation-based test
+A plot containing the empirical p-pvalue
+of the permutation-based test
 }
 \description{
 Test a network against random
+}
+\examples{
+data("abiotic_stress_Heat_genes_net")
+set.seed(999)
+results <- evaluate_network(abiotic_stress_Heat_genes_net)
+test_validation_rate(abiotic_stress_Heat_genes_net, N = 100)
 }
