@@ -15,7 +15,7 @@ devtools::install()
 
 usethis::use_gpl3_license()
 
-pkgdown::build_site()
+pkgdown::build_home()
 
 devtools::build_vignettes()
 
