@@ -1,0 +1,27 @@
+authors:
+  Océane Cassan:
+    href: https://oceanecsn.github.io/
+  
+  
+development:
+  mode: unreleased
+
+template:
+  params:
+    bootswatch: flatly
+
+reference:
+
+- title: Inferred network evaluation
+- contents:
+  - starts_with("evaluate_")
+  
+- title: Inferred network testing against random
+- contents:
+  - starts_with("test_")
+
+- title: Visualization function
+- contents:
+  - starts_with("draw_")
+
+

@@ -12,10 +12,15 @@
 #' @param N Number of shuffled network to estimate the null ditribution
 #' of the validation rate. 200 by default.
 #'
-#' @return the empirical p-pvalue of the permutation-based test
+#' @return A plot containing the empirical p-pvalue 
+#' of the permutation-based test
 #' @export
 #'
 #' @examples
+#' data("abiotic_stress_Heat_genes_net")
+#' set.seed(999)
+#' results <- evaluate_network(abiotic_stress_Heat_genes_net)
+#' test_validation_rate(abiotic_stress_Heat_genes_net, N = 100)
 test_validation_rate <- function(net,
                                  validation = c("CHIPSeq", "DAPSeq", "TARGET"),
                                  N = 200) {

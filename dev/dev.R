@@ -13,6 +13,11 @@ usethis::use_vignette("Using-AraNetBench")
 devtools::document()
 devtools::install()
 
+usethis::use_gpl3_license()
+
+
+pkgdown::build_site()
+
 devtools::build_vignettes()
 
 

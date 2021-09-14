@@ -17,6 +17,11 @@
 #' by known interactions
 #'
 #' @export
+#' @examples 
+#' #' data("abiotic_stress_Heat_genes_net")
+#' set.seed(999)
+#' results <- evaluate_network(abiotic_stress_Heat_genes_net)
+#' results[c("tp", "fp", "tpr", "fpr")]
 evaluate_network <-
   function(net,
            validation = c("CHIPSeq", "DAPSeq", "TARGET"),

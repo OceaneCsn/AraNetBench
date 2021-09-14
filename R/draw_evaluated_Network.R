@@ -7,7 +7,11 @@
 #' @return ggplot/ggraph object
 #' @export
 #'
-#' @examples 
+#' @examples
+#' data("abiotic_stress_Heat_genes_net")
+#' set.seed(999)
+#' results <- evaluate_network(abiotic_stress_Heat_genes_net)
+#' draw_evaluated_network(results)
 draw_evaluated_network <- function(results, export = FALSE, filename = './evaluated_network.png'){
   
   biggest_component_only = TRUE
