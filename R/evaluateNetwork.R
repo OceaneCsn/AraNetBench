@@ -15,8 +15,9 @@
 #' (that should however contain all the nodes in the inferred network).
 #' Made to speed up computation in ROC and test again random.
 #'
-#' @return a list containing true positives, true positive rate,
-#' false positives, false positive rate, and the input network dataframe
+#' @return a list containing true positives, true positive rate (precision),
+#' false positives, false positive rate, the false positives,
+#' and the recall value. It also returns the input network dataframe
 #' with an additional column to characterize how is the edge supported
 #' by known interactions
 #'
