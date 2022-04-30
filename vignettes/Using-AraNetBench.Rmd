@@ -74,7 +74,7 @@ For reproducible results, set the seed before random networks perumtations :
 ```{r}
 set.seed(999)
 results <- evaluate_network(abiotic_stress_Heat_genes_net)
-results[c("tp", "fp", "tpr", "fpr")]
+results[c("tp", "fp", "tpr", "fpr", "fn", "recall")]
 knitr::kable(head(results$edges, n = 20))
 ```
 
@@ -104,7 +104,7 @@ To test if the network contains biological signal or if the rate of validated ed
 For example, DAPSeq, CHIPSeq and TARGET information clearly seem to be captured by the network inference in the demo dataset: 
 
 ```{r, fig.width=8, fig.height=6}
-test_validation_rate(abiotic_stress_Heat_genes_net, N = 100)
+test_validation_rate(net = abiotic_stress_Heat_genes_net, validation = c("CHIPSeq", "DAPSeq", "TARGET"), N = 100)
 ```
 
 Whereas CHIPSeq signal alone in the network could have been achieved by randomly linking TFs to targets...

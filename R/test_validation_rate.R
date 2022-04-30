@@ -34,13 +34,13 @@ test_validation_rate <- function(net,
   subset <- validated_edges[validated_edges$from %in% net$from &
                               validated_edges$to %in% net$to, ]
   
-  observed <- evaluate_network(net, validation, subset)
+  observed <- evaluate_network(net = net, validation = validation, subset)
   tprs <- c()
   for (i in 1:N) {
     shuffled_net <- net
     shuffled_net$to <- sample(shuffled_net$to, replace = FALSE)
     res <-
-      evaluate_network(shuffled_net,
+      evaluate_network(net = shuffled_net,
                        validation = validation,
                        subset_validated_edges = subset)
     tprs <- c(tprs, res$tpr)

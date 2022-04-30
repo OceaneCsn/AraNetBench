@@ -71,7 +71,7 @@ evaluate_network <-
     if(is.null(input_genes))
       input_genes <- unique(net$to)
     # ungroups them if needed
-    if (stringr::str_detect(input_genes, "mean_")) {
+    if (any(stringr::str_detect(input_genes, "mean_"))) {
       distincts <-input_genes[!grepl("mean_", input_genes)]
       groups <- setdiff(input_genes, distincts)
       for (group in groups) {

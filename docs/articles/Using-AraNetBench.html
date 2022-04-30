@@ -47,7 +47,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -76,7 +76,7 @@
 
       
 
-      </header><script src="Using-AraNetBench_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><script src="Using-AraNetBench_files/header-attrs-2.13/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Using-AraNetBench</h1>
@@ -194,7 +194,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">999</span><span class="op">)</span>
 <span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/evaluate_network.html">evaluate_network</a></span><span class="op">(</span><span class="va">abiotic_stress_Heat_genes_net</span><span class="op">)</span>
-<span class="va">results</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"tp"</span>, <span class="st">"fp"</span>, <span class="st">"tpr"</span>, <span class="st">"fpr"</span><span class="op">)</span><span class="op">]</span>
+<span class="va">results</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"tp"</span>, <span class="st">"fp"</span>, <span class="st">"tpr"</span>, <span class="st">"fpr"</span>, <span class="st">"fn"</span>, <span class="st">"recall"</span><span class="op">)</span><span class="op">]</span>
 <span class="co">#&gt; $tp</span>
 <span class="co">#&gt; [1] 266</span>
 <span class="co">#&gt; </span>
@@ -206,6 +206,12 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $fpr</span>
 <span class="co">#&gt; [1] 0.7268994</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $fn</span>
+<span class="co">#&gt; [1] 2240</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $recall</span>
+<span class="co">#&gt; [1] 0.1061453</span>
 <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">results</span><span class="op">$</span><span class="va">edges</span>, n <span class="op">=</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -355,11 +361,15 @@
 <p>To test if the network contains biological signal or if the rate of validated edges does not differ from what is expected under random inference, run <code>test_validation_rate</code> on the inferred network.</p>
 <p>For example, DAPSeq, CHIPSeq and TARGET information clearly seem to be captured by the network inference in the demo dataset:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/test_validation_rate.html">test_validation_rate</a></span><span class="op">(</span><span class="va">abiotic_stress_Heat_genes_net</span>, N <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/test_validation_rate.html">test_validation_rate</a></span><span class="op">(</span>net <span class="op">=</span> <span class="va">abiotic_stress_Heat_genes_net</span>, validation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"CHIPSeq"</span>, <span class="st">"DAPSeq"</span>, <span class="st">"TARGET"</span><span class="op">)</span>, N <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
+<span class="co">#&gt; Warning in stri_detect_regex(string, pattern, negate = negate, opts_regex =</span>
+<span class="co">#&gt; opts(pattern)): argument is not an atomic vector; coercing</span></code></pre></div>
 <p><img src="Using-AraNetBench_files/figure-html/unnamed-chunk-7-1.png" width="768"></p>
 <p>Whereas CHIPSeq signal alone in the network could have been achieved by randomly linking TFs to targets…</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/test_validation_rate.html">test_validation_rate</a></span><span class="op">(</span><span class="va">abiotic_stress_Heat_genes_net</span>, validation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"CHIPSeq"</span><span class="op">)</span>, N <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/test_validation_rate.html">test_validation_rate</a></span><span class="op">(</span><span class="va">abiotic_stress_Heat_genes_net</span>, validation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"CHIPSeq"</span><span class="op">)</span>, N <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
+<span class="co">#&gt; Warning in stri_detect_regex(string, pattern, negate = negate, opts_regex =</span>
+<span class="co">#&gt; opts(pattern)): argument is not an atomic vector; coercing</span></code></pre></div>
 <p><img src="Using-AraNetBench_files/figure-html/unnamed-chunk-8-1.png" width="768"></p>
 <p>Other functions to come soon, like drawing ROC curves on fully connected weighted inferred networks!</p>
 </div>
