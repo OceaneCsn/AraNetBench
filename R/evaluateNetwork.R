@@ -28,7 +28,7 @@
 #' results <- evaluate_network(abiotic_stress_Heat_genes_net)
 #' results[c("tp", "fp", "tpr", "fpr", "fn", "recall")]
 evaluate_network <-
-  function(net, input_genes = NULL,
+  function(net, input_genes = NULL, input_tfs = NULL,
            validation = c("CHIPSeq", "DAPSeq", "TARGET"),
            subset_validated_edges = NULL) {
     if (!is.null(subset_validated_edges))
@@ -82,6 +82,21 @@ evaluate_network <-
       input_genes <- distincts
     }
     
+    # all genes studied in the network inference
+    if(is.null(input_tfs))
+      input_tfs <- unique(net$from)
+    # ungroups them if needed
+    if (any(stringr::str_detect(input_tfs, "mean_"))) {
+      distincts <-input_tfs[!grepl("mean_", input_tfs)]
+      groups <- setdiff(input_tfs, distincts)
+      for (group in groups) {
+        distincts <- c(distincts,
+                       strsplit(stringr::str_split_fixed(group, "_", 2)[, 2],
+                                '-')[[1]])
+      }
+      input_tfs <- distincts
+    }
+    
     
     # ------------------------------------------------------------------------ #
     
@@ -100,7 +115,7 @@ evaluate_network <-
     # restricting validation edges to TFs and genes present in predicted network
     # (useful to compute false negatives, missed edges)
     validated_edges_specific_unique <- validated_edges_specific_unique[
-      validated_edges_specific_unique$from %in% net$from & 
+      validated_edges_specific_unique$from %in% input_tfs & 
         validated_edges_specific_unique$to %in% input_genes,]
 
     
