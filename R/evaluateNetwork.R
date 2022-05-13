@@ -6,6 +6,11 @@
 #' (useful to accurately compute recall, so that genes in input but not in
 #' predicted edges are counted as false negatives. If not given, will only 
 #' count as false negatives genes missed in the predicted network)
+#' @param input_tfs vector of TFs AGIs used for network inference as input
+#' (useful to accurately compute recall, so that TFs in input but not in
+#' predicted edges are counted as false negatives. If not given, will only 
+#' count as false negatives genes missed in the predicted network for TFs
+#' int he predicted network)
 #' @param validation type of edge in the validation database that
 #' should be considered to defined a true/supported prediction in the
 #' evaluation process.
